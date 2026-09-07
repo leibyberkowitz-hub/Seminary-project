@@ -1,0 +1,21 @@
+{
+  "name": "seminary-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "migrate": "node src/lib/migrate.js",
+    "seed": "node seeds/seed.js"
+  },
+  "dependencies": {
+    "@hebcal/core": "^5.4.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "pg": "^8.12.0"
+  }
+}
