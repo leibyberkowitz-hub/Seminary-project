@@ -16,9 +16,18 @@ export const PORTAL_ENTITIES = {
     'pupils', 'courses', 'enrollments', 'attendance', 'exams', 'exam_results',
     'exam_levels', 'lessons', 'applications', 'diary_events', 'tasks',
     'school_years', 'groups', 'classes', 'contacts',
+    // admissions pipeline
+    'schools', 'interviews', 'application_status_log',
+    // academics
+    'subjects', 'grades', 'exam_groups',
+    // scheduling
+    'recurring_courses', 'days_off', 'terms', 'events',
+    // notes
+    'task_notes', 'contact_notes',
   ],
   fees: [
     'pupils', 'pupil_fees', 'contacts', 'classes', 'groups', 'school_years',
+    'terms', 'contact_notes',
   ],
   finance: null, // null = every entity
 };
