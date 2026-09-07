@@ -315,6 +315,26 @@ export function RecordForm({ entity, title, fields, record, onClose, onSaved }) 
 
 // ---------------------------------------------------------------- generic detail view
 
+// Tabbed detail layout: tabs = [{key, label, count?, render}]
+export function Tabs({ tabs, defaultTab }) {
+  const [active, setActive] = useState(defaultTab || tabs[0]?.key);
+  const current = tabs.find((t) => t.key === active) || tabs[0];
+  return (
+    <div>
+      <div className="tabs">
+        {tabs.map((t) => (
+          <button key={t.key} className={'tab' + (t.key === active ? ' active' : '')}
+            onClick={() => setActive(t.key)}>
+            {t.label}
+            {t.count !== undefined && <span className="count">{t.count}</span>}
+          </button>
+        ))}
+      </div>
+      {current?.render()}
+    </div>
+  );
+}
+
 export function FieldView({ label, children }) {
   return (
     <div className="fld-view">

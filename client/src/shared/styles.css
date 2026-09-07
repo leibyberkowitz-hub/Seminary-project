@@ -110,3 +110,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   .main { padding: 14px; }
   .modal .fields { grid-template-columns: 1fr; }
 }
+
+.tabs { display: flex; gap: 2px; border-bottom: 2px solid var(--border); margin-bottom: 16px; overflow-x: auto; }
+.tab { padding: 8px 16px; cursor: pointer; font-weight: 600; font-size: 13.5px; color: var(--muted); border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; font-family: inherit; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab .count { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 1px 7px; font-size: 11px; margin-left: 5px; }
+.page-sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
