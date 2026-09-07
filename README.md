@@ -27,6 +27,8 @@ is immediately available in Fees and Finance.
 createuser seminary --pwprompt   # password: seminary_dev
 createdb seminary -O seminary
 
+# (Or with Docker: docker compose up --build  →  http://localhost:3001)
+
 # 2. Backend — runs migrations on boot; seed adds demo data + logins
 cd server
 npm install
