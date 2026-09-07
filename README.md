@@ -1,16 +1,25 @@
 # Seminary Management System
 
 A modernization of an AppSheet school/seminary management system:
-**one PostgreSQL database, one REST API, three linked web portals.**
+**one PostgreSQL database, one REST API, three separate websites — each with
+its own name and its own logins.**
 
-| Portal | URL | Purpose |
+| Website | URL | Purpose |
 | --- | --- | --- |
-| Attendance & Applications | `/attendance/` | Daily roll call, late/missed log, pupils, courses, exams, applications, Hebrew-calendar diary, tasks |
-| Fees | `/fees/` | Tuition & discounts per pupil, one-off fee charges, family statements |
-| Finance | `/finance/` | Dashboard/reports, transactions, invoices, expenses, suppliers, bank accounts, pledges, loans, charity receipts, staff & contacts, **QuickBooks CSV import** |
+| Seminary Attendance | `/attendance/` | Daily roll call, late/missed log, pupils, courses, exams, applications (with scan-to-fill), Hebrew-calendar diary, tasks |
+| Seminary Fees Office | `/fees/` | Tuition & discounts per pupil, one-off fee charges, family statements |
+| Seminary Finance | `/finance/` | Dashboard/reports, transactions, invoices, expenses, suppliers, bank accounts, pledges, loans, charity receipts, staff & contacts, **QuickBooks CSV import** |
 
-All three share the same database, API, and login — a pupil created in Attendance
-is immediately available in Fees and Finance.
+The three sites share one database — a pupil registered on the Attendance site
+appears on the Fees site immediately — but access is separate: each user
+account is granted specific sites, signing in happens per site, and a session
+for one site cannot call another site's API (enforced server-side, per token).
+
+**Separate domains:** set `PORTAL_DOMAINS`, e.g.
+`PORTAL_DOMAINS=attendance.school.org=attendance,fees.school.org=fees,finance.school.org=finance`
+and point all three domains at the server — each domain then serves only its
+own site. Alternatively run three instances, each with `PORTAL=attendance`
+(or `fees`/`finance`) to serve a single site at the root.
 
 ## Stack
 
@@ -42,8 +51,12 @@ npm run build       # production build served by the API server
 # or: npm run dev   # Vite dev server on :5173 proxying /api to :3001
 ```
 
-**Demo logins:** `admin@seminary.local` / `admin123` (full access) and
-`staff@seminary.local` / `staff123` (no finance writes, no deletes).
+**Demo logins (per site):**
+- `admin@seminary.local` / `admin123` — access to all three sites
+- `attendance@seminary.local` / `attend123` — Seminary Attendance only (staff role)
+- `fees@seminary.local` / `fees123` — Seminary Fees Office only
+- `finance@seminary.local` / `finance123` — Seminary Finance only
+- `staff@seminary.local` / `staff123` — Attendance only, staff role (no deletes)
 
 Environment variables: `DATABASE_URL`, `JWT_SECRET`, `PORT` (default 3001).
 

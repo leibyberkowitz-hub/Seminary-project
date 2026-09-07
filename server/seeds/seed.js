@@ -163,11 +163,14 @@ async function seed() {
   ]);
 
   await db('users').insert([
-    { email: 'admin@seminary.local', password_hash: await bcrypt.hash('admin123', 10), name: 'Administrator', role: 'admin' },
-    { email: 'staff@seminary.local', password_hash: await bcrypt.hash('staff123', 10), name: 'Mrs R. Weiss', role: 'staff', staff_id: staffRows[0].id },
+    { email: 'admin@seminary.local', password_hash: await bcrypt.hash('admin123', 10), name: 'Administrator', role: 'admin', portals: ['attendance', 'fees', 'finance'] },
+    { email: 'staff@seminary.local', password_hash: await bcrypt.hash('staff123', 10), name: 'Mrs R. Weiss', role: 'staff', staff_id: staffRows[0].id, portals: ['attendance'] },
+    { email: 'attendance@seminary.local', password_hash: await bcrypt.hash('attend123', 10), name: 'Attendance Secretary', role: 'staff', portals: ['attendance'] },
+    { email: 'fees@seminary.local', password_hash: await bcrypt.hash('fees123', 10), name: 'Fees Office', role: 'admin', portals: ['fees'] },
+    { email: 'finance@seminary.local', password_hash: await bcrypt.hash('finance123', 10), name: 'Treasurer', role: 'admin', portals: ['finance'] },
   ]);
 
-  console.log('Seed complete. Logins: admin@seminary.local/admin123, staff@seminary.local/staff123');
+  console.log('Seed complete. Logins (per site): admin@seminary.local/admin123 (all three), attendance@seminary.local/attend123, fees@seminary.local/fees123, finance@seminary.local/finance123');
 }
 
 seed().then(() => process.exit(0)).catch((e) => { console.error(e); process.exit(1); });

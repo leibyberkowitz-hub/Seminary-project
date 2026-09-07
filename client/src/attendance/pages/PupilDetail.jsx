@@ -78,7 +78,7 @@ export default function PupilDetail() {
         { key: 'amount', label: 'Amount', type: 'money' },
         { key: 'paid', label: 'Paid', type: 'bool' },
       ]} />
-      <p className="muted">Fees are managed in the <a href="/fees/">Fees portal</a>.</p>
+      <p className="muted">Fees are managed on the Seminary Fees Office site.</p>
 
       {editing && (
         <RecordForm entity="pupils" title="Pupil" fields={pupilFields} record={p}

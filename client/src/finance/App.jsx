@@ -35,7 +35,7 @@ const nav = [
 
 export default function App() {
   return (
-    <Layout appName="Finance" accent="#7c3aed" nav={nav}>
+    <Layout appName="Seminary Finance" accent="#7c3aed" nav={nav}>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />

@@ -28,10 +28,10 @@ export default function Home() {
       </div>
       <div className="panel">
         <p>
-          This portal manages the money side of pupils: annual tuition with per-family discounts
+          This site manages the money side of pupils: annual tuition with per-family discounts
           (net tuition is computed automatically), one-off fee charges (trips, books, dinners…),
-          and per-family statements. It shares its database with the Attendance and Finance portals —
-          pupils created there appear here immediately.
+          and per-family statements. It shares one database with the Attendance and Finance sites —
+          pupils registered there appear here immediately — but each site has its own logins.
         </p>
       </div>
     </div>

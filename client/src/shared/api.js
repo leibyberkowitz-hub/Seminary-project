@@ -1,15 +1,22 @@
-const TOKEN_KEY = 'seminary_token';
-const USER_KEY = 'seminary_user';
+// Each of the three sites has its own identity and its own sessions: tokens
+// are stored under a per-site key and issued by the API for that site only.
+const site = { id: 'attendance', name: 'Seminary Attendance' };
+export function configureSite(id, name) { site.id = id; site.name = name; }
+export const siteId = () => site.id;
+export const siteName = () => site.name;
 
-export const getToken = () => localStorage.getItem(TOKEN_KEY);
+const TOKEN_KEY = () => `seminary_token_${site.id}`;
+const USER_KEY = () => `seminary_user_${site.id}`;
+
+export const getToken = () => localStorage.getItem(TOKEN_KEY());
 export const getUser = () => {
-  try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch { return null; }
+  try { return JSON.parse(localStorage.getItem(USER_KEY())); } catch { return null; }
 };
 export const isAdmin = () => getUser()?.role === 'admin';
 
 export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(USER_KEY);
+  localStorage.removeItem(TOKEN_KEY());
+  localStorage.removeItem(USER_KEY());
   window.location.reload();
 }
 
@@ -29,9 +36,9 @@ export async function api(path, { method = 'GET', body } = {}) {
 }
 
 export async function login(email, password) {
-  const data = await api('/auth/login', { method: 'POST', body: { email, password } });
-  localStorage.setItem(TOKEN_KEY, data.token);
-  localStorage.setItem(USER_KEY, JSON.stringify(data.user));
+  const data = await api('/auth/login', { method: 'POST', body: { email, password, portal: site.id } });
+  localStorage.setItem(TOKEN_KEY(), data.token);
+  localStorage.setItem(USER_KEY(), JSON.stringify(data.user));
   return data.user;
 }
 

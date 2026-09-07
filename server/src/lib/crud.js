@@ -10,6 +10,7 @@ import { Router } from 'express';
 import { db } from '../db.js';
 import { entities } from './entities.js';
 import { requireAdmin } from './auth.js';
+import { portalAllows } from './portals.js';
 
 const columnCache = new Map();
 async function columnsOf(table) {
@@ -67,6 +68,12 @@ export function buildCrudRouter() {
     const def = entities[req.params.entity];
     if (!def) return res.status(404).json({ error: `Unknown entity '${req.params.entity}'` });
     req.entityDef = def;
+    // /options label lookups are open to any signed-in user; everything else
+    // is scoped to the site the token was issued for.
+    const isOptions = req.method === 'GET' && req.path.endsWith('/options');
+    if (!isOptions && !portalAllows(req.user.portal, req.params.entity)) {
+      return res.status(403).json({ error: `'${req.params.entity}' is not available on this site.` });
+    }
     const isWrite = !['GET', 'HEAD', 'OPTIONS'].includes(req.method);
     if (isWrite && def.adminOnly && req.user.role !== 'admin') {
       return res.status(403).json({ error: 'Admin access required' });

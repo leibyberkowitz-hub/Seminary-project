@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { api, qs, login, logout, getUser, getToken, isAdmin, fmtMoney, fmtDate, downloadCsv } from './api.js';
+import { api, qs, login, logout, getUser, getToken, isAdmin, fmtMoney, fmtDate, downloadCsv, siteName } from './api.js';
 
 // ---------------------------------------------------------------- auth gate
 
@@ -24,8 +24,8 @@ export function AuthGate({ appName, children }) {
   return (
     <div className="login-wrap">
       <form className="login-box" onSubmit={submit}>
-        <h1>{appName}</h1>
-        <div className="sub">Seminary Management — sign in</div>
+        <h1>{appName || siteName()}</h1>
+        <div className="sub">Sign in with your {siteName()} account</div>
         {err && <div className="err">{err}</div>}
         <label className="fld"><span>Email</span>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus required />
@@ -62,12 +62,6 @@ export function Layout({ appName, accent, nav, children }) {
           </React.Fragment>
         ))}
         <div className="spacer" />
-        <div className="switcher">
-          Portals:{' '}
-          <a href="/attendance/">Attendance</a>
-          <a href="/fees/">Fees</a>
-          <a href="/finance/">Finance</a>
-        </div>
         <div className="userbox">
           <span>{user?.name || user?.email} · {user?.role}</span>
           <button onClick={logout}>Sign out</button>

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { entities } from '../lib/entities.js';
+import { portalAllows } from '../lib/portals.js';
 
 export const exportRouter = Router();
 
@@ -27,6 +28,9 @@ exportRouter.get('/:entity.csv', async (req, res, next) => {
     }
     if (def.adminOnly && req.user.role !== 'admin') {
       return res.status(403).json({ error: 'Admin access required' });
+    }
+    if (!portalAllows(req.user.portal, name)) {
+      return res.status(403).json({ error: `'${name}' export is not available on this site.` });
     }
     const query = db(def.table).select('*').limit(20000);
     for (const [col, val] of Object.entries(req.query)) {
