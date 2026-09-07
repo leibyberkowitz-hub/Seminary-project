@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seminary Management</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f1f5f9; min-height: 100vh;
+           display: flex; align-items: center; justify-content: center; color: #0f172a; }
+    .wrap { max-width: 880px; padding: 40px 20px; text-align: center; }
+    h1 { font-size: 28px; margin-bottom: 6px; }
+    p.sub { color: #64748b; margin-bottom: 36px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+    a.card { display: block; background: #fff; border-radius: 14px; padding: 28px 22px; text-decoration: none;
+             color: inherit; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,.06); transition: transform .12s; }
+    a.card:hover { transform: translateY(-3px); }
+    .icon { font-size: 34px; margin-bottom: 12px; }
+    .card h2 { font-size: 17px; margin-bottom: 6px; }
+    .card p { font-size: 13px; color: #64748b; line-height: 1.45; }
+    .bar { height: 4px; border-radius: 2px; margin-bottom: 18px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Seminary Management</h1>
+    <p class="sub">One database · three portals. Sign in with the same account in each.</p>
+    <div class="cards">
+      <a class="card" href="/attendance/">
+        <div class="bar" style="background:#2563eb"></div>
+        <div class="icon">🕰️</div>
+        <h2>Attendance &amp; Applications</h2>
+        <p>Daily roll call, late/missed log, pupils, courses, exams, applications, diary &amp; tasks.</p>
+      </a>
+      <a class="card" href="/fees/">
+        <div class="bar" style="background:#059669"></div>
+        <div class="icon">🧾</div>
+        <h2>Fees</h2>
+        <p>Tuition, discounts and net fees per pupil, fee charges, family statements.</p>
+      </a>
+      <a class="card" href="/finance/">
+        <div class="bar" style="background:#7c3aed"></div>
+        <div class="icon">🏦</div>
+        <h2>Finance</h2>
+        <p>Transactions, invoices, expenses, suppliers, banks, pledges — with QuickBooks import.</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

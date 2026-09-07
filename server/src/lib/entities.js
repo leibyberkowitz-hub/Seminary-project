@@ -126,6 +126,17 @@ export const entities = {
       bank_account_id: { table: 'bank_accounts', label: 'name' },
     },
   },
+  invoices: {
+    table: 'invoices',
+    adminOnly: true,
+    label: "TRIM(number || ' ' || description)",
+    search: ['number', 'description', 'status'],
+    refs: {
+      contact_id: { table: 'contacts', label: "TRIM(title || ' ' || first_name || ' ' || surname)" },
+      supplier_id: { table: 'suppliers', label: 'name' },
+      pupil_id: { table: 'pupils', label: pupilLabel },
+    },
+  },
   expenses: {
     table: 'expenses',
     adminOnly: true,

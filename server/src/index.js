@@ -10,6 +10,7 @@ import { dashboardRouter } from './routes/dashboard.js';
 import { attendanceRouter } from './routes/attendance.js';
 import { calendarRouter } from './routes/calendar.js';
 import { exportRouter } from './routes/export.js';
+import { importRouter } from './routes/import.js';
 
 const app = express();
 app.use(cors());
@@ -21,6 +22,7 @@ app.use('/api/dashboard', requireAuth, dashboardRouter);
 app.use('/api/attendance-tools', requireAuth, attendanceRouter);
 app.use('/api/calendar', requireAuth, calendarRouter);
 app.use('/api/export', requireAuth, exportRouter);
+app.use('/api/import', requireAuth, importRouter);
 app.use('/api', requireAuth, buildCrudRouter());
 
 // serve the built frontend in production

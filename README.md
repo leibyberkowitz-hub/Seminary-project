@@ -1,0 +1,78 @@
+# Seminary Management System
+
+A modernization of an AppSheet school/seminary management system:
+**one PostgreSQL database, one REST API, three linked web portals.**
+
+| Portal | URL | Purpose |
+| --- | --- | --- |
+| Attendance & Applications | `/attendance/` | Daily roll call, late/missed log, pupils, courses, exams, applications, Hebrew-calendar diary, tasks |
+| Fees | `/fees/` | Tuition & discounts per pupil, one-off fee charges, family statements |
+| Finance | `/finance/` | Dashboard/reports, transactions, invoices, expenses, suppliers, bank accounts, pledges, loans, charity receipts, staff & contacts, **QuickBooks CSV import** |
+
+All three share the same database, API, and login — a pupil created in Attendance
+is immediately available in Fees and Finance.
+
+## Stack
+
+- **Database:** PostgreSQL 16 (plain-SQL migrations in `server/migrations/`)
+- **Backend:** Node 22 + Express + Knex, JWT auth with `admin`/`staff` roles,
+  `@hebcal/core` for the Hebrew calendar
+- **Frontend:** React 18 + Vite (three separate app entries sharing one component
+  library), Recharts for the finance chart
+
+## Getting started
+
+```bash
+# 1. Database (adjust DATABASE_URL if yours differs)
+createuser seminary --pwprompt   # password: seminary_dev
+createdb seminary -O seminary
+
+# 2. Backend — runs migrations on boot; seed adds demo data + logins
+cd server
+npm install
+npm run seed        # once, on a fresh database
+npm start           # API + built frontend on http://localhost:3001
+
+# 3. Frontend
+cd ../client
+npm install
+npm run build       # production build served by the API server
+# or: npm run dev   # Vite dev server on :5173 proxying /api to :3001
+```
+
+**Demo logins:** `admin@seminary.local` / `admin123` (full access) and
+`staff@seminary.local` / `staff123` (no finance writes, no deletes).
+
+Environment variables: `DATABASE_URL`, `JWT_SECRET`, `PORT` (default 3001).
+
+## API overview
+
+- `POST /api/auth/login`, `GET /api/auth/me`, admin user management under `/api/auth/users`
+- Generic CRUD for every entity (pupils, courses, enrollments, staff, contacts,
+  attendance, exams, exam_results, exam_levels, lessons, applications,
+  transactions, invoices, expenses, expense_allocations, pupil_fees,
+  charity_receipts, pledges, loans, suppliers, bank_accounts, diary_events,
+  tasks, school_years, groups, classes, settings):
+  `GET/POST /api/:entity`, `GET/PUT/DELETE /api/:entity/:id`,
+  `GET /api/:entity/options` — with `?q=` search, `?sort=&dir=`,
+  `?column=value` filters, and reference labels/child records attached.
+- `GET /api/dashboard/report?from&to&category&type` — totals, monthly trend,
+  category breakdown, transaction feed
+- `GET|POST /api/attendance-tools/rollcall`, `GET /api/attendance-tools/log`,
+  `GET /api/attendance-tools/daily-counts`
+- `GET /api/calendar?from&to` — diary events + Jewish holidays/parsha + Hebrew dates
+- `GET /api/export/{pupils|staff|attendance|transactions|contacts|courses}.csv`
+- `POST /api/import/quickbooks/preview` and `POST /api/import/quickbooks` —
+  QuickBooks report CSV import (idempotent via per-row external refs)
+
+## Business rules implemented (defaults — confirm before go-live)
+
+- **Net tuition** = Full Tuition − Discount (computed column, always in sync)
+- **Roll call** upserts one status per pupil per date (optionally per course)
+- **Recurring tasks**: completing one spawns the next occurrence `recur_days` later
+- **Accepting an application** creates the pupil record automatically
+- **Lessons log** snapshots the staff rate at entry time (`quantity × rate`);
+  staff running balances are currently manual fields — see open questions in the
+  project proposal
+- **QuickBooks import** maps income/expense by amount sign and transaction type,
+  categorizes by QuickBooks account, and never duplicates rows on re-import
