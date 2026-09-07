@@ -11,10 +11,11 @@ import { attendanceRouter } from './routes/attendance.js';
 import { calendarRouter } from './routes/calendar.js';
 import { exportRouter } from './routes/export.js';
 import { importRouter } from './routes/import.js';
+import { scanRouter } from './routes/scan.js';
 
 const app = express();
 app.use(cors());
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '25mb' })); // scanned application photos arrive as base64 JSON
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 app.use('/api/auth', authRouter);
@@ -23,6 +24,7 @@ app.use('/api/attendance-tools', requireAuth, attendanceRouter);
 app.use('/api/calendar', requireAuth, calendarRouter);
 app.use('/api/export', requireAuth, exportRouter);
 app.use('/api/import', requireAuth, importRouter);
+app.use('/api/import', requireAuth, scanRouter);
 app.use('/api', requireAuth, buildCrudRouter());
 
 // serve the built frontend in production

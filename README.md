@@ -64,6 +64,10 @@ Environment variables: `DATABASE_URL`, `JWT_SECRET`, `PORT` (default 3001).
 - `GET /api/export/{pupils|staff|attendance|transactions|contacts|courses}.csv`
 - `POST /api/import/quickbooks/preview` and `POST /api/import/quickbooks` —
   QuickBooks report CSV import (idempotent via per-row external refs)
+- `POST /api/import/application-scan` — reads a photo/PDF of a paper
+  application form with Claude vision (handwriting and Yiddish/Hebrew
+  supported) and returns pre-filled application fields for review.
+  Requires `ANTHROPIC_API_KEY` to be set on the server.
 
 ## Business rules implemented (defaults — confirm before go-live)
 

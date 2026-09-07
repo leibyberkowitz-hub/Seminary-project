@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { api } from '../../shared/api.js';
 import { DataTable, PageHead, RecordForm } from '../../shared/ui.jsx';
 
@@ -18,6 +18,39 @@ const appFields = [
 export default function Applications() {
   const [editing, setEditing] = useState(null); // null | {} | record
   const [refreshKey, setRefreshKey] = useState(0);
+  const [scanning, setScanning] = useState(false);
+  const [scanMsg, setScanMsg] = useState('');
+  const fileRef = useRef(null);
+
+  // Scan a photo/PDF of a paper application: the server reads it with Claude
+  // vision and returns pre-filled fields; the user reviews before saving.
+  const onScanFile = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    setScanning(true); setScanMsg('Reading the scanned form… this takes a few seconds.');
+    try {
+      const data = await new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(String(r.result).split(',')[1]); // strip data: prefix
+        r.onerror = () => reject(new Error('Could not read the file'));
+        r.readAsDataURL(file);
+      });
+      const result = await api('/import/application-scan', {
+        method: 'POST',
+        body: { media_type: file.type || 'image/jpeg', data },
+      });
+      setScanMsg(result.unreadable_fields?.length
+        ? `Scanned — please check these fields by hand: ${result.unreadable_fields.join(', ')}.`
+        : 'Scanned. Review the pre-filled form and save.');
+      setEditing({ _prefill: result.application });
+    } catch (err) {
+      setScanMsg('');
+      alert(err.message);
+    } finally {
+      setScanning(false);
+    }
+  };
 
   // Accepting an application creates the pupil record automatically.
   const accept = async (r) => {
@@ -38,8 +71,13 @@ export default function Applications() {
   return (
     <div>
       <PageHead title="Applications">
+        <button className="btn secondary" onClick={() => fileRef.current?.click()} disabled={scanning}>
+          {scanning ? 'Scanning…' : '📷 Scan Application'}
+        </button>
         <button className="btn" onClick={() => setEditing({})}>+ New Application</button>
       </PageHead>
+      <input ref={fileRef} type="file" accept="image/*,application/pdf" hidden onChange={onScanFile} />
+      {scanMsg && <div className="panel">{scanMsg}</div>}
       <DataTable
         entity="applications" refreshKey={refreshKey} defaultSort="applied_on" defaultDir="desc"
         onRowClick={(r) => setEditing(r)}
@@ -63,8 +101,8 @@ export default function Applications() {
       />
       {editing && (
         <RecordForm entity="applications" title="Application" fields={appFields}
-          record={editing.id ? editing : null}
-          onClose={() => setEditing(null)} onSaved={() => setRefreshKey((k) => k + 1)} />
+          record={editing.id ? editing : editing._prefill || null}
+          onClose={() => { setEditing(null); setScanMsg(''); }} onSaved={() => setRefreshKey((k) => k + 1)} />
       )}
     </div>
   );
