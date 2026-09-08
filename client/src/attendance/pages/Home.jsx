@@ -19,7 +19,7 @@ export default function Home() {
       <div className="cards">
         <div className="stat"><div className="label">Active pupils</div><div className="value">{summary?.activePupils ?? '…'}</div></div>
         <div className="stat"><div className="label">Today attended</div><div className="value ok">{t.attended || 0}</div></div>
-        <div className="stat"><div className="label">Today late</div><div className="value" style={{ color: '#d97706' }}>{t.late || 0}</div></div>
+        <div className="stat"><div className="label">Today late</div><div className="value warn">{t.late || 0}</div></div>
         <div className="stat"><div className="label">Today missed</div><div className="value bad">{t.missed || 0}</div></div>
         <div className="stat"><div className="label">Open tasks</div><div className="value">{summary?.openTasks ?? '…'}</div></div>
       </div>

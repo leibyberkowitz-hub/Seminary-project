@@ -51,14 +51,14 @@ export default function Dashboard() {
         <div style={{ width: '100%', height: 280 }}>
           <ResponsiveContainer>
             <ComposedChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" fontSize={12} />
+              <CartesianGrid stroke="#e7e3da" vertical={false} />
+              <XAxis dataKey="month" fontSize={12} tickFormatter={(m) => { const [y, mo] = m.split("-"); return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+mo - 1] + " " + y.slice(2); }} />
               <YAxis fontSize={12} tickFormatter={(v) => `£${(v / 1000).toFixed(0)}k`} />
               <Tooltip formatter={(v) => fmtMoney(v)} />
               <Legend />
-              <Bar dataKey="income" fill="#059669" name="Income" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="expense" fill="#dc2626" name="Expense" radius={[4, 4, 0, 0]} />
-              <Line dataKey="net" stroke="#7c3aed" name="Net" strokeWidth={2} dot />
+              <Bar dataKey="income" fill="#14804a" name="Income" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="expense" fill="#d13a4a" name="Expense" radius={[4, 4, 0, 0]} />
+              <Line dataKey="net" stroke="#3a4db3" name="Net" strokeWidth={2} dot />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
@@ -72,7 +72,7 @@ export default function Dashboard() {
             <tbody>
               {(data?.byCategory || []).map((c, i) => (
                 <tr key={i}><td>{c.category || '—'}</td><td>{c.type}</td>
-                  <td className="num" style={{ color: Number(c.net) >= 0 ? '#059669' : '#dc2626' }}>{fmtMoney(c.net)}</td></tr>
+                  <td className="num" style={{ color: Number(c.net) >= 0 ? '#14804a' : '#c02638' }}>{fmtMoney(c.net)}</td></tr>
               ))}
             </tbody>
           </table>
@@ -89,8 +89,8 @@ export default function Dashboard() {
                     <td>{t.description || t.full_description}</td>
                     <td>{t.name || t.staff_id_label || t.supplier_id_label}</td>
                     <td>{t.category}</td>
-                    <td className="num" style={{ color: '#059669' }}>{Number(t.amount_in) ? fmtMoney(t.amount_in) : ''}</td>
-                    <td className="num" style={{ color: '#dc2626' }}>{Number(t.amount_out) ? fmtMoney(t.amount_out) : ''}</td>
+                    <td className="num" style={{ color: '#14804a' }}>{Number(t.amount_in) ? fmtMoney(t.amount_in) : ''}</td>
+                    <td className="num" style={{ color: '#c02638' }}>{Number(t.amount_out) ? fmtMoney(t.amount_out) : ''}</td>
                   </tr>
                 ))}
               </tbody>

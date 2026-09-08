@@ -3,47 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seminary Management</title>
+  <link rel="stylesheet" href="/src/shared/fonts.css">
+  <title>Seminary Sites</title>
   <style>
     * { box-sizing: border-box; margin: 0; }
-    body { font-family: system-ui, -apple-system, sans-serif; background: #f1f5f9; min-height: 100vh;
-           display: flex; align-items: center; justify-content: center; color: #0f172a; }
-    .wrap { max-width: 880px; padding: 40px 20px; text-align: center; }
-    h1 { font-size: 28px; margin-bottom: 6px; }
-    p.sub { color: #64748b; margin-bottom: 36px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
-    a.card { display: block; background: #fff; border-radius: 14px; padding: 28px 22px; text-decoration: none;
-             color: inherit; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,.06); transition: transform .12s; }
+    body { font-family: 'Hanken Grotesk', system-ui, sans-serif; background: #f6f4ef; color: #1c1b1a; min-height: 100vh; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 64px 24px 48px; }
+    .suite { display: flex; align-items: center; gap: 13px; margin-bottom: 4px; }
+    .suite .mono { width: 34px; height: 34px; border-radius: 9px; background: #1c1b1a; color: #f6f4ef; display: flex; align-items: center; justify-content: center; font-family: 'Heebo', sans-serif; font-weight: 800; font-size: 17px; }
+    .suite b { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+    .suite span { font-size: 13px; color: #8a8578; font-weight: 600; }
+    h1 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -0.025em; margin: 26px 0 10px; max-width: 640px; line-height: 1.05; }
+    p.lede { font-size: 16px; color: #6f6a5e; max-width: 600px; margin-bottom: 44px; line-height: 1.5; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+    a.card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e7e3da; border-top: 4px solid var(--c); border-radius: 18px; padding: 26px 24px 22px; transition: transform .15s; }
     a.card:hover { transform: translateY(-3px); }
-    .icon { font-size: 34px; margin-bottom: 12px; }
-    .card h2 { font-size: 17px; margin-bottom: 6px; }
-    .card p { font-size: 13px; color: #64748b; line-height: 1.45; }
-    .bar { height: 4px; border-radius: 2px; margin-bottom: 18px; }
+    .card .mono { width: 46px; height: 46px; border-radius: 12px; background: var(--t); color: var(--c); display: flex; align-items: center; justify-content: center; font-family: 'Heebo', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 20px; }
+    .card h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+    .card .heb { font-family: 'Heebo', sans-serif; direction: rtl; text-align: left; font-size: 14px; color: var(--c); font-weight: 600; margin-top: 1px; }
+    .card p { font-size: 14px; color: #6f6a5e; line-height: 1.5; margin-top: 12px; }
+    .card .go { margin-top: 20px; font-size: 13.5px; font-weight: 700; color: var(--c); }
+    .card .who { font-size: 12px; color: #a39c8d; margin-top: 14px; font-weight: 600; }
+    .foot { margin-top: 56px; border-top: 1px solid #e7e3da; padding-top: 26px; display: flex; gap: 48px; flex-wrap: wrap; }
+    .foot .lbl { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: #a39c8d; margin-bottom: 12px; }
+    .pills { display: flex; gap: 9px; flex-wrap: wrap; }
+    .pill { font-size: 11.5px; font-weight: 700; padding: 4px 11px; border-radius: 20px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Seminary Sites</h1>
-    <p class="sub">Three separate websites on one shared database — each with its own logins.</p>
+    <div class="suite"><div class="mono">ס</div><b>Seminary Sites</b><span>Institution Suite</span></div>
+    <h1>Three offices. One record. Choose where you're signing in.</h1>
+    <p class="lede">Each site is its own workspace with its own sign-in, sharing one underlying database of pupils, staff, courses and money.</p>
     <div class="cards">
-      <a class="card" href="/attendance/">
-        <div class="bar" style="background:#2563eb"></div>
-        <div class="icon">🕰️</div>
+      <a class="card" href="/attendance/" style="--c:#0e7c66;--t:#dcefe9">
+        <div class="mono">נ</div>
         <h2>Seminary Attendance</h2>
-        <p>Daily roll call, late/missed log, pupils, courses, exams, applications, diary &amp; tasks.</p>
+        <div class="heb">נוכחות · רישום</div>
+        <p>Attendance &amp; applications. Daily roll call, pupil records, courses, exams, the Hebrew-calendar diary and tasks.</p>
+        <div class="go">Sign in →</div>
+        <div class="who">Office secretaries · Teachers</div>
       </a>
-      <a class="card" href="/fees/">
-        <div class="bar" style="background:#059669"></div>
-        <div class="icon">🧾</div>
+      <a class="card" href="/fees/" style="--c:#3a4db3;--t:#e6e8f7">
+        <div class="mono">ש</div>
         <h2>Seminary Fees Office</h2>
-        <p>Tuition, discounts and net fees per pupil, fee charges, family statements.</p>
+        <div class="heb">שכר לימוד</div>
+        <p>The fees office. Tuition &amp; discounts, one-off charges and full family statements.</p>
+        <div class="go">Sign in →</div>
+        <div class="who">Fees administrator</div>
       </a>
-      <a class="card" href="/finance/">
-        <div class="bar" style="background:#7c3aed"></div>
-        <div class="icon">🏦</div>
+      <a class="card" href="/finance/" style="--c:#8a5a12;--t:#f1e7d4">
+        <div class="mono">כ</div>
         <h2>Seminary Finance</h2>
-        <p>Transactions, invoices, expenses, suppliers, banks, pledges — with QuickBooks import.</p>
+        <div class="heb">כספים</div>
+        <p>Full finance. Transactions, invoices, bills, payroll, reconciliation, reporting and QuickBooks import.</p>
+        <div class="go">Sign in →</div>
+        <div class="who">Treasurer / Bookkeeper</div>
       </a>
+    </div>
+    <div class="foot">
+      <div>
+        <div class="lbl">SHARED STATUS COLOURS</div>
+        <div class="pills">
+          <span class="pill" style="background:#e2f2ea;color:#14804a">Attended</span>
+          <span class="pill" style="background:#fbeed6;color:#b3730a">Late</span>
+          <span class="pill" style="background:#fbe4e7;color:#c02638">Missed</span>
+          <span class="pill" style="background:#e2f2ea;color:#14804a">Paid</span>
+          <span class="pill" style="background:#fbe4e7;color:#c02638">Unpaid</span>
+          <span class="pill" style="background:#fbe4e7;color:#c02638">Overdue</span>
+          <span class="pill" style="background:#e2f2ea;color:#14804a">Done</span>
+        </div>
+      </div>
+      <div>
+        <div class="lbl">TYPE &amp; LANGUAGE</div>
+        <div style="display:flex;align-items:baseline;gap:16px">
+          <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:22px">Bricolage</span>
+          <span style="font-size:16px;font-weight:600">Hanken Grotesk</span>
+          <span style="font-family:'Heebo';font-size:18px;font-weight:600">עברית · אידיש</span>
+        </div>
+      </div>
     </div>
   </div>
 </body>

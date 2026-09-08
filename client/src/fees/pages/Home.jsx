@@ -22,7 +22,7 @@ export default function Home() {
       <div className="cards">
         <div className="stat"><div className="label">Active pupils</div><div className="value">{pupils?.length ?? '…'}</div></div>
         <div className="stat"><div className="label">Full tuition (total)</div><div className="value">{fmtMoney(sum(pupils, 'full_tuition'))}</div></div>
-        <div className="stat"><div className="label">Discounts given</div><div className="value" style={{ color: '#d97706' }}>{fmtMoney(sum(pupils, 'discount'))}</div></div>
+        <div className="stat"><div className="label">Discounts given</div><div className="value warn">{fmtMoney(sum(pupils, 'discount'))}</div></div>
         <div className="stat"><div className="label">Net tuition (total)</div><div className="value ok">{fmtMoney(sum(pupils, 'net_tuition'))}</div></div>
         <div className="stat"><div className="label">Unpaid charges</div><div className="value bad">{unpaid.length} · {fmtMoney(sum(unpaid, 'amount'))}</div></div>
       </div>

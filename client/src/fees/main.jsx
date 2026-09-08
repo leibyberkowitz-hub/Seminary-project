@@ -10,7 +10,7 @@ configureSite('fees', 'Seminary Fees Office');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthGate appName="Seminary Fees Office">
+    <AuthGate appName="Seminary Fees Office" mono="ש" accent="#3a4db3" tint="#e6e8f7">
       <HashRouter><App /></HashRouter>
     </AuthGate>
   </React.StrictMode>

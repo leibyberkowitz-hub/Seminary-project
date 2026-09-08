@@ -4,8 +4,12 @@ import { api, qs, login, logout, getUser, getToken, isAdmin, fmtMoney, fmtDate, 
 
 // ---------------------------------------------------------------- auth gate
 
-export function AuthGate({ appName, children }) {
+export function AuthGate({ appName, accent, tint, mono, children }) {
   const [user, setUser] = useState(getUser());
+  useEffect(() => {
+    if (accent) document.documentElement.style.setProperty('--accent', accent);
+    if (tint) document.documentElement.style.setProperty('--accent-soft', tint);
+  }, [accent, tint]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState('');
@@ -24,6 +28,7 @@ export function AuthGate({ appName, children }) {
   return (
     <div className="login-wrap">
       <form className="login-box" onSubmit={submit}>
+        {mono && <div className="mono">{mono}</div>}
         <h1>{appName || siteName()}</h1>
         <div className="sub">Sign in with your {siteName()} account</div>
         {err && <div className="err">{err}</div>}
@@ -41,30 +46,49 @@ export function AuthGate({ appName, children }) {
 
 // ---------------------------------------------------------------- layout
 
-export function Layout({ appName, accent, nav, children }) {
+const initialsOf = (name = '') =>
+  name.replace(/^(Rabbi|Mr|Mrs|Miss|Ms|Dr)\.? /, '').split(/\s+/).map((w) => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+
+export function Layout({ appName, tagline, mono, accent, tint, nav, children }) {
   const user = getUser();
   useEffect(() => {
     if (accent) document.documentElement.style.setProperty('--accent', accent);
-  }, [accent]);
+    if (tint) document.documentElement.style.setProperty('--accent-soft', tint);
+  }, [accent, tint]);
   return (
     <div className="app">
       <aside className="sidebar">
-        <div className="brand"><span className="dot" style={{ background: accent }} /> {appName}</div>
-        {nav.map((group) => (
-          <React.Fragment key={group.title}>
-            <div className="group-title">{group.title}</div>
-            {group.items.map((it) => (
-              <NavLink key={it.to} to={it.to} end={it.to === '/'}
-                className={({ isActive }) => 'nav-item' + (isActive ? ' active' : '')}>
-                {it.label}
-              </NavLink>
-            ))}
-          </React.Fragment>
-        ))}
-        <div className="spacer" />
+        <div className="brand">
+          <div className="mono">{mono}</div>
+          <div>
+            <div className="name">{appName}</div>
+            {tagline && <div className="tag">{tagline}</div>}
+          </div>
+        </div>
+        <div className="navwrap">
+          {nav.map((group) => (
+            <React.Fragment key={group.title}>
+              <div className="group-title">{group.title}</div>
+              {group.items.map((it) => (
+                <NavLink key={it.to} to={it.to} end={it.to === '/'}
+                  className={({ isActive }) => 'nav-item' + (isActive ? ' active' : '')}>
+                  <span>{it.label}</span>
+                </NavLink>
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
         <div className="userbox">
-          <span>{user?.name || user?.email} · {user?.role}</span>
-          <button onClick={logout}>Sign out</button>
+          <div className="avatar">{initialsOf(user?.name || user?.email)}</div>
+          <div className="who">
+            <b>{user?.name || user?.email}</b>
+            <span>{user?.role === 'admin' ? 'Administrator' : 'Staff'}</span>
+          </div>
+          <button onClick={logout} title="Sign out" aria-label="Sign out">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 4h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3" /><path d="M10 8l-4 4 4 4" /><path d="M6 12h9" />
+            </svg>
+          </button>
         </div>
       </aside>
       <main className="main">{children}</main>

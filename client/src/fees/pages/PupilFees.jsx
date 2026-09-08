@@ -39,7 +39,7 @@ export default function PupilFees() {
             key: 'paid', label: 'Paid', sortable: false,
             render: (r) => (
               <button className={`btn small ${r.paid ? '' : 'secondary'}`}
-                style={r.paid ? { background: '#059669' } : {}}
+                style={r.paid ? { background: '#14804a' } : {}}
                 onClick={(e) => { e.stopPropagation(); togglePaid(r); }}>
                 {r.paid ? 'Paid ✓' : 'Mark paid'}
               </button>

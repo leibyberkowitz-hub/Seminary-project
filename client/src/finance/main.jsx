@@ -10,7 +10,7 @@ configureSite('finance', 'Seminary Finance');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthGate appName="Seminary Finance">
+    <AuthGate appName="Seminary Finance" mono="כ" accent="#8a5a12" tint="#f1e7d4">
       <HashRouter><App /></HashRouter>
     </AuthGate>
   </React.StrictMode>

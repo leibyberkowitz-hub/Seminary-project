@@ -35,7 +35,7 @@ const nav = [
 
 export default function App() {
   return (
-    <Layout appName="Seminary Finance" accent="#7c3aed" nav={nav}>
+    <Layout appName="Seminary Finance" tagline="Finance · כספים" mono="כ" accent="#8a5a12" tint="#f1e7d4" nav={nav}>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />

@@ -35,7 +35,7 @@ const nav = [
 
 export default function App() {
   return (
-    <Layout appName="Seminary Attendance" accent="#2563eb" nav={nav}>
+    <Layout appName="Seminary Attendance" tagline="Attendance · נוכחות" mono="נ" accent="#0e7c66" tint="#dcefe9" nav={nav}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rollcall" element={<RollCall />} />

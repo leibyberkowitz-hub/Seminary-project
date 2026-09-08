@@ -77,7 +77,7 @@ export default function RollCall() {
                   {STATUSES.map((s) => (
                     <button key={s}
                       className={`btn small ${r.status === s ? '' : 'secondary'}`}
-                      style={{ marginRight: 4, ...(r.status === s ? { background: { attended: '#059669', late: '#d97706', missed: '#dc2626', pending: '#64748b' }[s] } : {}) }}
+                      style={{ marginRight: 4, ...(r.status === s ? { background: { attended: '#14804a', late: '#b3730a', missed: '#c02638', pending: '#6f6a5e' }[s] } : {}) }}
                       onClick={() => setStatus(r.id, s)}>
                       {s}
                     </button>

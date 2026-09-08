@@ -17,7 +17,7 @@ const nav = [
 
 export default function App() {
   return (
-    <Layout appName="Seminary Fees Office" accent="#059669" nav={nav}>
+    <Layout appName="Seminary Fees Office" tagline="Fees office · שכר לימוד" mono="ש" accent="#3a4db3" tint="#e6e8f7" nav={nav}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tuition" element={<Tuition />} />

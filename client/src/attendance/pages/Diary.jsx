@@ -3,8 +3,8 @@ import { api, qs, todayIso, fmtDate } from '../../shared/api.js';
 import { PageHead, RecordForm } from '../../shared/ui.jsx';
 
 export const EVENT_COLORS = {
-  General: '#2563eb', Exam: '#dc2626', Trip: '#059669', Meeting: '#7c3aed',
-  Holiday: '#b45309', Deadline: '#d97706',
+  General: '#0e7c66', Exam: '#c02638', Trip: '#14804a', Meeting: '#3a4db3',
+  Holiday: '#8a5a12', Deadline: '#b3730a',
 };
 const eventFields = [
   { key: 'title', label: 'Title', full: true },
@@ -122,7 +122,7 @@ export default function Diary() {
         {Object.entries(EVENT_COLORS).map(([t, c]) => (
           <span key={t}><span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 3, background: c, marginRight: 4 }} />{t}</span>
         ))}
-        <span><span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 3, background: '#b45309', marginRight: 4 }} />Jewish holiday / parsha</span>
+        <span><span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 3, background: '#fbeed6', border: '1px solid #b3730a', marginRight: 4 }} />Jewish holiday / parsha</span>
       </div>
       {view !== 'day' && (
         <div className="cal-grid" style={{ marginBottom: 6 }}>
